@@ -13,7 +13,6 @@ import os
 from datetime import date,datetime,timedelta
 
 
-fichier_adherent = '/home/pi/Documents/test.csv'
 fichier_temp= '/home/pi/Documents/fichier_temporaire.csv'
 vrai_fichier_adherent = '/home/pi/Documents/UTF-8.csv'
 sortie = '/home/pi/Documents/sortie.txt'
@@ -48,13 +47,13 @@ def faire_string(line):
 def supprimer_ligne(chaine):
 	contenu = ""
 
-	fichier_supprimer = open(fichier_adherent,"r")
+	fichier_supprimer = open(vrai_fichier_adherent,"r")
 	for ligne in fichier_supprimer:
 		if not(chaine in ligne):
 			contenu += ligne
 	fichier_supprimer.close()
  
-	fichier_ecrire = open(fichier_adherent, 'w')
+	fichier_ecrire = open(vrai_fichier_adherent, 'w')
 	fichier_ecrire.write(contenu)
 	fichier_ecrire.close()
 
@@ -198,7 +197,7 @@ def retourner_admin():
         if request.form['bouton']=="supprimer":
             compteur=0
             numero = request.form['numero']
-            with open(fichier_adherent,'r') as fichier_read:
+            with open(vrai_fichier_adherent,'r') as fichier_read:
                 reader = csv.reader(fichier_read)
                 for line in reader:
                     nom = line[1]
@@ -213,7 +212,7 @@ def retourner_admin():
                        
                         texte = "Pas d'adhérent associé à ce ID"
                     
-            os.rename('/home/pi/Documents/fichier_temporaire.csv','/home/pi/Documents/test.csv')
+            os.rename('/home/pi/Documents/fichier_temporaire.csv','/home/pi/Documents/UTF-8.csv')
             return render_template('confirmation.html', visiteur = visiteur,dernier = dernier, accueil=accueil,historique=historique,admin=admin,texte=texte,logout = logout)
         
         if request.form['bouton']=="rechercher":
@@ -265,7 +264,7 @@ def ajouter():
     nom = request.args.get('nom')
     numero = request.args.get('numero')
     texte = ''
-    with open(fichier_adherent,'r') as fichier_read:
+    with open(vrai_fichier_adherent,'r') as fichier_read:
                 reader = csv.reader(fichier_read)
                 for line in reader:
                     chaine = [line[0],line[1],line[2],line[3],line[4],line[5]]
@@ -284,7 +283,7 @@ def sans_badge():
     prenom = request.args.get('prenom')
     nom = request.args.get('nom')
     cherche = nom + ',' + prenom
-    for ligne in open (fichier_adherent):
+    for ligne in open (vrai_fichier_adherent):
         if cherche in ligne:
             with open (sortie,'a') as simuler_badge:
                 entree = faire_string(ligne)
