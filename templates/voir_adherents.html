@@ -22,7 +22,7 @@
 	{% for item in ligne %}
     
     {% if loop.index is divisibleby(4) %}
-	<td> <a class="btn btn-primary"  name = "bouton" value = "ajouteer" href="{{item}}" role="button">Associer</a>  <a class="btn btn-success"  name = "bouton" value = "entree" href="{{item}}&action=entree" role="button">Voir les entrées</a></td>
+	<td> <a class="btn btn-primary"  name = "bouton" value = "ajouteer" href="{{item}}&action=voir" role="button">Associer</a>  <a class="btn btn-success"  name = "bouton" value = "entree" href="{{item}}&action=entree" role="button">Voir les entrées</a></td>
 	
 	{% else %}
 	<td>{{ item }}</td>
