@@ -43,19 +43,6 @@ def faire_string(line):
         heure = time.strftime("%H:%M")
         date = str(date1)
         return '\n' + date + ' ' + heure +' '+ ligne[2] + ' ' + ligne[1] + texte
-  
-def supprimer_ligne(chaine):
-	contenu = ""
-
-	fichier_supprimer = open(vrai_fichier_adherent,"r")
-	for ligne in fichier_supprimer:
-		if not(chaine in ligne):
-			contenu += ligne
-	fichier_supprimer.close()
- 
-	fichier_ecrire = open(vrai_fichier_adherent, 'w')
-	fichier_ecrire.write(contenu)
-	fichier_ecrire.close()
 
 #Permet de lire le dernier badge non repertorié qui a été badgé   
 def lire_dernier():
