@@ -245,24 +245,24 @@ def ajouter():
                 contenu.append(line[3])
         return render_template('voir_entrees.html',accueil = accueil,historique = historique,admin=admin,logout=logout,visiteur=visiteur,contenu=contenu,cherche = cherche)
                 
-            
-    dernier = lire_dernier()
-    prenom = request.args.get('prenom')
-    nom = request.args.get('nom')
-    numero = request.args.get('numero')
-    texte = ''
-    with open(vrai_fichier_adherent,'r') as fichier_read:
-                reader = csv.reader(fichier_read)
-                for line in reader:
-                    chaine = [line[0],line[1],line[2],line[3],line[4],line[5]]
-                    if line[1]==nom:
-                        if line[2]==prenom:
-                            chaine = [line[0],line[1],line[2],line[3],line[4], numero]
-                            texte = "Vous avez associé l'adhérent " + line[2] + " " + line[1] + " au numéro " + numero
-                    ecrire(chaine)
-    
-    os.rename('/home/pi/Documents/fichier_temporaire.csv','/home/pi/Documents/test.csv')
-    return redirect(url_for('retourner_admin'))
+    if request.args['action']=="voir":     
+        dernier = lire_dernier()
+	prenom = request.args.get('prenom')
+	nom = request.args.get('nom')
+	numero = request.args.get('numero')
+	texte = ''
+	with open(vrai_fichier_adherent,'r') as fichier_read:
+	    reader = csv.reader(fichier_read)
+	        for line in reader:
+		    chaine = [line[0],line[1],line[2],line[3],line[4],line[5]]
+		        if line[1]==nom:
+			    if line[2]==prenom:
+			        chaine = [line[0],line[1],line[2],line[3],line[4], numero]
+			        texte = "Vous avez associé l'adhérent " + line[2] + " " + line[1] + " au numéro " + numero
+		    ecrire(chaine)
+
+	    os.rename('/home/pi/Documents/fichier_temporaire.csv','/home/pi/Documents/UTF-8.csv')
+	    return redirect(url_for('retourner_admin'))
 
 @app.route('/sans_badge',methods=['GET','POST'])
 def sans_badge():
